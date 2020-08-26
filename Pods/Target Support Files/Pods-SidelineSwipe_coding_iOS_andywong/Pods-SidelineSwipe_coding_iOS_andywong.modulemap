@@ -1,0 +1,6 @@
+framework module Pods_SidelineSwipe_coding_iOS_andywong {
+  umbrella header "Pods-SidelineSwipe_coding_iOS_andywong-umbrella.h"
+
+  export *
+  module * { export * }
+}

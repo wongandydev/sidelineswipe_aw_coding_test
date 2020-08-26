@@ -3,27 +3,27 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8CBE933678F900DF3B744CD6 /* Pods_SidelineSwipe_coding_iOS_andywong.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E87D2FCC373370BAE4329300 /* Pods_SidelineSwipe_coding_iOS_andywong.framework */; };
 		AF2A4CBE24F58164004C6901 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A4CBD24F58164004C6901 /* AppDelegate.swift */; };
-		AF2A4CC024F58164004C6901 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A4CBF24F58164004C6901 /* SceneDelegate.swift */; };
 		AF2A4CC224F58164004C6901 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A4CC124F58164004C6901 /* ViewController.swift */; };
-		AF2A4CC524F58164004C6901 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF2A4CC324F58164004C6901 /* Main.storyboard */; };
 		AF2A4CC724F58165004C6901 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF2A4CC624F58165004C6901 /* Assets.xcassets */; };
 		AF2A4CCA24F58165004C6901 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF2A4CC824F58165004C6901 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5AD1ECFC098B81B32689DDD7 /* Pods-SidelineSwipe_coding_iOS_andywong.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SidelineSwipe_coding_iOS_andywong.debug.xcconfig"; path = "Target Support Files/Pods-SidelineSwipe_coding_iOS_andywong/Pods-SidelineSwipe_coding_iOS_andywong.debug.xcconfig"; sourceTree = "<group>"; };
 		AF2A4CBA24F58164004C6901 /* SidelineSwipe_coding_iOS_andywong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SidelineSwipe_coding_iOS_andywong.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF2A4CBD24F58164004C6901 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AF2A4CBF24F58164004C6901 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		AF2A4CC124F58164004C6901 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AF2A4CC424F58164004C6901 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AF2A4CC624F58165004C6901 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF2A4CC924F58165004C6901 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AF2A4CCB24F58165004C6901 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D116F0DCC3BBDBDBF236D527 /* Pods-SidelineSwipe_coding_iOS_andywong.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SidelineSwipe_coding_iOS_andywong.release.xcconfig"; path = "Target Support Files/Pods-SidelineSwipe_coding_iOS_andywong/Pods-SidelineSwipe_coding_iOS_andywong.release.xcconfig"; sourceTree = "<group>"; };
+		E87D2FCC373370BAE4329300 /* Pods_SidelineSwipe_coding_iOS_andywong.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SidelineSwipe_coding_iOS_andywong.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +31,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CBE933678F900DF3B744CD6 /* Pods_SidelineSwipe_coding_iOS_andywong.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		977FB351E7C08D0E0B935A52 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5AD1ECFC098B81B32689DDD7 /* Pods-SidelineSwipe_coding_iOS_andywong.debug.xcconfig */,
+				D116F0DCC3BBDBDBF236D527 /* Pods-SidelineSwipe_coding_iOS_andywong.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		AF2A4CB124F58164004C6901 = {
 			isa = PBXGroup;
 			children = (
 				AF2A4CBC24F58164004C6901 /* SidelineSwipe_coding_iOS_andywong */,
 				AF2A4CBB24F58164004C6901 /* Products */,
+				977FB351E7C08D0E0B935A52 /* Pods */,
+				F839CCFD76C67E64572B5B92 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,14 +69,20 @@
 			isa = PBXGroup;
 			children = (
 				AF2A4CBD24F58164004C6901 /* AppDelegate.swift */,
-				AF2A4CBF24F58164004C6901 /* SceneDelegate.swift */,
 				AF2A4CC124F58164004C6901 /* ViewController.swift */,
-				AF2A4CC324F58164004C6901 /* Main.storyboard */,
 				AF2A4CC624F58165004C6901 /* Assets.xcassets */,
 				AF2A4CC824F58165004C6901 /* LaunchScreen.storyboard */,
 				AF2A4CCB24F58165004C6901 /* Info.plist */,
 			);
 			path = SidelineSwipe_coding_iOS_andywong;
+			sourceTree = "<group>";
+		};
+		F839CCFD76C67E64572B5B92 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E87D2FCC373370BAE4329300 /* Pods_SidelineSwipe_coding_iOS_andywong.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +92,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF2A4CCE24F58165004C6901 /* Build configuration list for PBXNativeTarget "SidelineSwipe_coding_iOS_andywong" */;
 			buildPhases = (
+				D402DBB3CB3B30E3EA8FC48C /* [CP] Check Pods Manifest.lock */,
 				AF2A4CB624F58164004C6901 /* Sources */,
 				AF2A4CB724F58164004C6901 /* Frameworks */,
 				AF2A4CB824F58164004C6901 /* Resources */,
+				D788000573A79A5C0D5C37B8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -127,11 +147,52 @@
 			files = (
 				AF2A4CCA24F58165004C6901 /* LaunchScreen.storyboard in Resources */,
 				AF2A4CC724F58165004C6901 /* Assets.xcassets in Resources */,
-				AF2A4CC524F58164004C6901 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D402DBB3CB3B30E3EA8FC48C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SidelineSwipe_coding_iOS_andywong-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D788000573A79A5C0D5C37B8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SidelineSwipe_coding_iOS_andywong/Pods-SidelineSwipe_coding_iOS_andywong-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SidelineSwipe_coding_iOS_andywong/Pods-SidelineSwipe_coding_iOS_andywong-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SidelineSwipe_coding_iOS_andywong/Pods-SidelineSwipe_coding_iOS_andywong-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AF2A4CB624F58164004C6901 /* Sources */ = {
@@ -140,21 +201,12 @@
 			files = (
 				AF2A4CC224F58164004C6901 /* ViewController.swift in Sources */,
 				AF2A4CBE24F58164004C6901 /* AppDelegate.swift in Sources */,
-				AF2A4CC024F58164004C6901 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		AF2A4CC324F58164004C6901 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AF2A4CC424F58164004C6901 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		AF2A4CC824F58165004C6901 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -282,9 +334,11 @@
 		};
 		AF2A4CCF24F58165004C6901 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5AD1ECFC098B81B32689DDD7 /* Pods-SidelineSwipe_coding_iOS_andywong.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EURL27CLKV;
 				INFOPLIST_FILE = SidelineSwipe_coding_iOS_andywong/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -293,15 +347,17 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.andywong.SidelineSwipe-coding-iOS-andywong";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		AF2A4CD024F58165004C6901 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D116F0DCC3BBDBDBF236D527 /* Pods-SidelineSwipe_coding_iOS_andywong.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EURL27CLKV;
 				INFOPLIST_FILE = SidelineSwipe_coding_iOS_andywong/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -310,7 +366,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.andywong.SidelineSwipe-coding-iOS-andywong";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
