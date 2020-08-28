@@ -59,9 +59,10 @@ class ViewController: UIViewController {
         page += 1
         apiCall({ newItems in
             if !newItems.isEmpty {
+                self.items.append(contentsOf: newItems)
+                let newIndexPath = IndexPath(item: self.items.count - 1, section: 0)
+                
                 DispatchQueue.main.async {
-                    self.items.append(contentsOf: newItems)
-                    let newIndexPath = IndexPath(item: self.collectionView.numberOfItems(inSection: 0), section: 0)
                     self.collectionView.insertItems(at: [newIndexPath])
                 }
             }
@@ -191,48 +192,3 @@ extension ViewController: UISearchBarDelegate {
     }
 }
 
-
-extension UIImageView {
-    func load(url: URL) {        
-        let imageCache = NSCache<NSString, UIImage>()
-        
-        //Add spinner
-        
-        let imageSpinner = UIActivityIndicatorView(style: .white)
-        imageSpinner.translatesAutoresizingMaskIntoConstraints = false
-        imageSpinner.hidesWhenStopped = true
-        
-        self.addSubview(imageSpinner)
-        imageSpinner.snp.makeConstraints({ make in
-            make.center.equalToSuperview()
-        })
-        imageSpinner.startAnimating()
-        
-        
-        
-        
-
-        // retrieves image if already available in cache
-        if let imageFromCache = imageCache.object(forKey: url.absoluteString as NSString) {
-            DispatchQueue.main.async { [weak self] in
-                self?.image = imageFromCache
-                imageSpinner.stopAnimating()
-                return
-            }
-            
-        }
-
-        // image does not available in cache.. so retrieving it from url...
-        DispatchQueue.main.async { [weak self] in
-            if let data = try? Data(contentsOf: url),
-                let image = UIImage(data: data) {
-                
-                DispatchQueue.main.async {
-                    self?.image = image
-                    imageSpinner.stopAnimating()
-                    imageCache.setObject(image, forKey: (url.absoluteString as NSString))
-                }
-            }
-        }
-    }
-}

@@ -103,10 +103,13 @@ class ItemCollectionViewCell: UICollectionViewCell {
         
         let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
         
+        
         self.imageView.addSubview(blurView)
         blurView.snp.makeConstraints({ make in
-            make.edges.equalTo(priceLabel)
+            make.center.equalTo(priceLabel)
+            make.width.height.equalTo(priceLabel).offset(10)
         })
+        
     }
     
     required init?(coder: NSCoder) {
