@@ -13,11 +13,15 @@ import SwiftyJSON
 class ViewController: UIViewController {
     lazy var searchBar = UISearchBar(frame: .zero)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
     var searchTerm = "nike" {
         didSet {
+            page = 1 // reset page number
             print(searchTerm)
         }
     }
+    
+    var page = 1
     
     
     var items: [Item] = []
@@ -51,7 +55,27 @@ class ViewController: UIViewController {
         })
     }
     
-    private func apiCall(page:Int = 1,_ completion: @escaping( ([Item]) -> Void)) {
+    private func add() {
+        page += 1
+        apiCall({ items in
+            if !items.isEmpty {
+                DispatchQueue.main.async {
+                    
+                    self.collectionView.performBatchUpdates({
+                        self.items.append(contentsOf: items)
+                        let newIndexPath = IndexPath(item: self.collectionView.numberOfItems(inSection:  0) + 1, section: 0)
+                        
+                        self.collectionView.insertItems(at: [newIndexPath])
+                    }, completion: nil)
+                    
+                    
+                    
+                }
+            }
+        })
+    }
+    
+    private func apiCall(_ completion: @escaping( ([Item]) -> Void)) {
         guard let apiURL = URL(string: "https://api.staging.sidelineswap.com/v1/facet_items?q=\(searchTerm)%20bag&page=\(page)") else {
             return
         }
@@ -133,13 +157,16 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         let item = items[indexPath.row]
         
         cell.configure(with: item)
+        cell.layer.shouldRasterize = true
+        cell.layer.rasterizationScale = UIScreen.main.scale
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if (indexPath.row == items.count - 1 ) {
-          //Load more data & reload your collection view
+        if (indexPath.row == items.count - 4 ) {
+            print("scrolled to end")
+            add()
         }
     }
 }
