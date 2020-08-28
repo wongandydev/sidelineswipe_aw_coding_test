@@ -7,4 +7,5 @@ target 'SidelineSwipe_coding_iOS_andywong' do
 
   # Pods for SidelineSwipe_coding_iOS_andywong
   pod 'SnapKit', '~> 5.0.0'
+  pod 'SwiftyJSON'
 end
