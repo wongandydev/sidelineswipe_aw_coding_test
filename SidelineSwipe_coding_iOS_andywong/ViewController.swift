@@ -55,21 +55,14 @@ class ViewController: UIViewController {
         })
     }
     
-    private func add() {
+    private func addPage() {
         page += 1
-        apiCall({ items in
-            if !items.isEmpty {
+        apiCall({ newItems in
+            if !newItems.isEmpty {
                 DispatchQueue.main.async {
-                    
-                    self.collectionView.performBatchUpdates({
-                        self.items.append(contentsOf: items)
-                        let newIndexPath = IndexPath(item: self.collectionView.numberOfItems(inSection:  0) + 1, section: 0)
-                        
-                        self.collectionView.insertItems(at: [newIndexPath])
-                    }, completion: nil)
-                    
-                    
-                    
+                    self.items.append(contentsOf: newItems)
+                    let newIndexPath = IndexPath(item: self.collectionView.numberOfItems(inSection: 0), section: 0)
+                    self.collectionView.insertItems(at: [newIndexPath])
                 }
             }
         })
@@ -140,6 +133,10 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
@@ -165,8 +162,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if (indexPath.row == items.count - 4 ) {
-            print("scrolled to end")
-            add()
+            addPage()
         }
     }
 }
