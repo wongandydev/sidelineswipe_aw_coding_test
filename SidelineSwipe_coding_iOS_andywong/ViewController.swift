@@ -13,28 +13,46 @@ import SwiftyJSON
 class ViewController: UIViewController {
     lazy var searchBar = UISearchBar(frame: .zero)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var searchTerm = "nike" {
+        didSet {
+            print(searchTerm)
+        }
+    }
     
     
     var items: [Item] = []
-    
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
-        
+        Spinner.start(view: self.view)
         apiCall({ items in
             self.items = items
             
             DispatchQueue.main.async {
+                Spinner.stop()
                 self.collectionView.reloadData()
             }
             
         })
     }
     
-    private func apiCall(_ completion: @escaping( ([Item]) -> Void)) {
-        guard let apiURL = URL(string: "https://api.staging.sidelineswap.com/v1/facet_items?q=nike%20bag&page=1") else {
+    private func search() {
+        apiCall({ items in
+            self.items = items
+            
+            DispatchQueue.main.async {
+                Spinner.stop()
+                self.collectionView.reloadData()
+            }
+            
+        })
+    }
+    
+    private func apiCall(page:Int = 1,_ completion: @escaping( ([Item]) -> Void)) {
+        guard let apiURL = URL(string: "https://api.staging.sidelineswap.com/v1/facet_items?q=\(searchTerm)%20bag&page=\(page)") else {
             return
         }
         
@@ -59,7 +77,6 @@ class ViewController: UIViewController {
         })
         
         task.resume()
-        
     }
     
     private func initItems(json: JSON) -> [Item] {
@@ -76,6 +93,13 @@ class ViewController: UIViewController {
         self.navigationItem.titleView = searchBar
 
         
+        //MARK: SearchBar
+        
+        searchBar.placeholder = "Search for items on sale"
+        searchBar.delegate = self
+        searchBar.tintColor = UIColor(named: "sidelineswap_color")
+        
+        //MARK: CollectionView
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: "item")
@@ -112,17 +136,78 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if (indexPath.row == items.count - 1 ) {
+          //Load more data & reload your collection view
+        }
+    }
+}
+
+extension ViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.endEditing(true)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchTerm = searchBar.text ?? ""
+        search()
+        searchBar.endEditing(true)
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchTerm = searchBar.text ?? ""
+        search()
+        Spinner.start(view: self.view)
+    }
 }
 
 
 extension UIImageView {
-    func load(url: URL) {
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
+    func load(url: URL) {        
+        let imageCache = NSCache<NSString, UIImage>()
+        
+        //Add spinner
+        
+        let imageSpinner = UIActivityIndicatorView(style: .white)
+        imageSpinner.translatesAutoresizingMaskIntoConstraints = false
+        imageSpinner.hidesWhenStopped = true
+        
+        self.addSubview(imageSpinner)
+        imageSpinner.snp.makeConstraints({ make in
+            make.center.equalToSuperview()
+        })
+        imageSpinner.startAnimating()
+        
+        
+        
+        
+
+        // retrieves image if already available in cache
+        if let imageFromCache = imageCache.object(forKey: url.absoluteString as NSString) {
+            DispatchQueue.main.async { [weak self] in
+                self?.image = imageFromCache
+                imageSpinner.stopAnimating()
+                return
+            }
+            
+        }
+
+        // image does not available in cache.. so retrieving it from url...
+        DispatchQueue.main.async { [weak self] in
+            if let data = try? Data(contentsOf: url),
+                let image = UIImage(data: data) {
+                
+                DispatchQueue.main.async {
+                    self?.image = image
+                    imageSpinner.stopAnimating()
+                    imageCache.setObject(image, forKey: (url.absoluteString as NSString))
                 }
             }
         }

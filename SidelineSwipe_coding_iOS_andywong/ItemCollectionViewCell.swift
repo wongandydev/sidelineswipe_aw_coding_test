@@ -20,11 +20,18 @@ class ItemCollectionViewCell: UICollectionViewCell {
             sellerLabel.text = sellerLabelText
         }
     }
+    
+    private var priceLabelText: String = "0" {
+        didSet {
+            priceLabel.text = "$\(priceLabelText)"
+        }
+    }
 
     
     private var imageView = UIImageView()
     private var itemNameLabel = UILabel()
     private var sellerLabel = UILabel()
+    private var priceLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,12 +50,14 @@ class ItemCollectionViewCell: UICollectionViewCell {
         
         if let itemName = item.name { itemNameText = itemName }
         if let sellerUsername = item.seller?.username { self.sellerLabelText = sellerUsername }
+        if let price = item.price { priceLabelText = String(Int(price)) }
     }
     
     
     fileprivate func setup() {
         
         self.backgroundColor = .white
+        self.layer.cornerRadius = 8
         
         // imageView
         imageView.contentMode = .scaleAspectFill
@@ -64,7 +73,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
         // itemNameText
         
         itemNameLabel.text = itemNameText
-        itemNameLabel.textColor = .white
+        itemNameLabel.textColor = .black
         
         self.contentView.addSubview(itemNameLabel)
         itemNameLabel.snp.makeConstraints({ make in
@@ -81,6 +90,22 @@ class ItemCollectionViewCell: UICollectionViewCell {
         sellerLabel.snp.makeConstraints({ make in
             make.top.equalTo(itemNameLabel.snp.bottom).offset(10)
             make.right.left.equalToSuperview().inset(10)
+        })
+        
+        priceLabel.text = priceLabelText
+        priceLabel.textColor = .white
+        priceLabel.layer.zPosition = 1
+        
+        self.imageView.addSubview(priceLabel)
+        priceLabel.snp.makeConstraints({ make in
+            make.bottom.right.equalToSuperview().inset(10)
+        })
+        
+        let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+        
+        self.imageView.addSubview(blurView)
+        blurView.snp.makeConstraints({ make in
+            make.edges.equalTo(priceLabel)
         })
     }
     
