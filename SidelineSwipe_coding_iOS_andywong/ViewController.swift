@@ -12,21 +12,28 @@ import SwiftyJSON
 
 class ViewController: UIViewController {
     lazy var searchBar = UISearchBar(frame: .zero)
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
+    
+    var items: [Item] = []
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupViews()
+        
         apiCall({ items in
+            self.items = items
+            
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
             
         })
     }
     
-    private func apiCall(_ completion: @escaping( ([String]) -> Void)) {
-        var items: [String] = []
-        
-        
+    private func apiCall(_ completion: @escaping( ([Item]) -> Void)) {
         guard let apiURL = URL(string: "https://api.staging.sidelineswap.com/v1/facet_items?q=nike%20bag&page=1") else {
             return
         }
@@ -45,7 +52,7 @@ class ViewController: UIViewController {
             do {
                 let json = try JSON(data: data)
                 let items = self.initItems(json: json["data"])
-                print(items)
+                completion(items)
             } catch let error {
                 print(error.localizedDescription)
             }
@@ -64,13 +71,17 @@ class ViewController: UIViewController {
     }
     
     private func setupViews() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor(named: "sidelineswap_color")
         
         self.navigationItem.titleView = searchBar
 
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.backgroundColor = .red
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: "item")
+        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
+        collectionView.backgroundColor = .clear
         
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints({ make in
@@ -78,104 +89,42 @@ class ViewController: UIViewController {
             make.left.bottom.right.equalToSuperview()
         })
     }
-
 }
 
-
-struct Item {
-    var id: Int?
-    var name: String?
-    var price: Double?
-    var list_price: Double?
-    var url: String?
-    var images: [Images]?
-    var seller: Seller?
-
-}
-
-extension Item {
-    enum Key: String {
-        case id
-        case name
-        case price
-        case list_price
-        case url
-        case images
-        case seller
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.width/2 - 20, height: UIScreen.main.bounds.height/4 - 20)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "item", for: indexPath) as! ItemCollectionViewCell
+        let item = items[indexPath.row]
         
-    }
-    
-    init(fromJSON json: JSON) {
-        self.id = json["data"][Key.id.rawValue].int
-        self.name = json[Key.name.rawValue].string
-        self.price = json[Key.price.rawValue].double
-        self.list_price = json[Key.list_price.rawValue].double
-        self.url = json[Key.url.rawValue].string
-                
-                            
-        let imagesJson = json[Key.images.rawValue]
-        self.images = initImages(json: imagesJson)
-                            
-        let sellerJson = json[Key.seller.rawValue]
-        self.seller = initSeller(json: sellerJson)
-
-    }
-    
-
-    func initImages(json: JSON) -> [Images] {
-        guard let images = json.dictionary?.map({ (key, subJson) -> Images in
-            return Images.init(fromJSON: [key: subJson])
-        }) else {return [Images]() }
-
-        return images
-    }
-    
-    func initSeller(json: JSON) -> Seller {
-        let seller = Seller.init(fromJSON: json)
-        return seller
-    }
-}
-
-
-struct Images {
-    var id: Int?
-    var thumb_url: String?
-    var large_url: String?
-}
-
-extension Images {
-    enum Key: String {
-        case id
-        case thumb_url
-        case large_url
-    }
-    
-    
-    
-    init(fromJSON json: JSON) {
+        cell.configure(with: item)
         
-        self.id = json[Key.id.rawValue].int
-        
-        self.thumb_url = json[Key.thumb_url.rawValue].string
-        self.large_url = json[Key.large_url.rawValue].string
+        return cell
     }
 }
 
-struct Seller {
-    var id: Int?
-    var username: String?
-}
 
-extension Seller {
-    enum Key: String {
-        case id
-        case username
-    }
-    
-    
-    init(fromJSON json: JSON) {
-        
-        self.id = json[Key.id.rawValue].int
-        self.username = json[Key.username.rawValue].string
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
     }
 }
